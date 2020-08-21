@@ -1,0 +1,231 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    overflow: hidden;
+}
+/******************************************/
+.header-menu{
+    max-width: 100%;
+    padding-right: 80px;
+    padding-left: 80px;
+    margin-right: auto;
+    margin-left: auto;
+    /* border: 1px solid blue; */
+    border-bottom: 1px solid rgb(184, 184, 184);
+    height: 60px;
+    padding-top: 6px;
+    background-color: white;
+}
+.main-menu{
+    display: flex;
+    /* background-color: white; */
+    font-size: 17px;
+    line-height: 1.5;
+    align-items: center;
+    /*--------*/
+}
+#nav-menu{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s;
+    z-index: 1;
+}
+.left-menu,.right-menu{
+    display: flex;
+    text-transform: uppercase;
+}
+.header-menu .left-menu .menu-layer1{
+    position: relative;
+}
+.header-menu .left-menu .menu-layer1 .dropbtn{
+    /* text-decoration: none; */
+    color: black;
+    border: none;
+    background-color: white;
+    font-size: 17px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* border: 1px solid black; */
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2{
+    position: absolute;
+    top: 44px;
+    left: -5px;
+    visibility: hidden;
+    opacity: 0;
+    /* display: none; */
+    background-color: white;
+    padding-top: 15px;
+    transition: 0.4s;
+    z-index: 2;
+    /* border: 1px solid brown; */
+}
+.header-menu .left-menu .menu-layer1:hover .menu-layer2{
+    /* visibility: visible;
+    opacity: 1; */
+}
+.header-menu .main-menu .left-menu .menu-layer1 .menu-layer2.show{
+    visibility: visible;
+    opacity: 1;
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2 ul{
+    display: flex;
+    width: 400px;
+    flex-wrap: wrap;
+    list-style: none;
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2 ul li a{
+    width: 165px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(243, 243, 243);
+    text-decoration: none;
+    color: black;
+    /* border: 1px solid brown; */
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2 ul li a p{
+    font-size: 15px;
+    width: 70%;
+    margin-left: 10px;
+    /* border: 1px solid green; */
+}
+.header-menu .left-menu > a{
+    text-decoration: none;
+    color: black;
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2 ul li a:hover{
+    background-color: rgb(128, 128, 128);
+}
+.header-menu .left-menu .menu-layer1 .menu-layer2 ul li a img{
+    height: 60px;
+}
+.left-menu a{
+    margin-left: 20px;
+}
+.logo-middle{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    /*
+    border: 1px solid black;
+    */
+    
+    text-align: center;
+}
+.logo-middle .logo{
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+    font-family: 'Quattrocento Sans', sans-serif;
+}
+.right-menu{
+    /* border: 1px solid green; */
+    align-items: center;
+}
+.right-menu .cart{
+    margin-left: 20px;
+    font-size: 23px;
+    cursor: pointer;
+}
+.right-menu div>a{
+    text-decoration: none;
+    color: black;
+}
+
+/******************************************/
+
+.login-section{
+    width: 29%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(243, 243, 243);
+    margin-top: 180px;
+    margin-bottom: 120px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.login-section .login-form{
+    margin-left: 35px;
+    margin-right: 35px;
+}
+.login-section .login-form p{
+    margin-bottom: 35px;
+    font-size: 20px;
+    /* border: 1px solid green; */
+}
+.login-section .login-form .text{
+    /* color: rgb(163, 163, 163); */
+    font-size: 18;
+    color: rgb(66, 66, 66);
+}
+.login-section .login-form input{
+    background: none;
+    border: none;
+    font-size: 18px;
+    /* border-bottom: 1px solid rgb(212, 206, 206); */
+    border-bottom: 1px solid rgb(168, 168, 168);
+    outline: none;
+    /* color: rgb(212, 206, 206); */
+    color: black;
+    padding: 7px 0px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.input-black{
+    border-bottom: 1px solid black;
+}
+.login-section .login-form ._password{
+    margin-bottom: 10px;
+}
+.login-section .login-form > a{
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: rgb(97, 97, 97);
+}
+.login-section .login-form > a:hover{
+    text-decoration: none;
+}
+.login-section .login-form .btn-submit{
+    width: 100%;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+    border: none;
+    letter-spacing: 2px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+.login-section .login-form .btn-submit:hover{
+    background-color: rgb(105, 105, 105);
+}
+.login-section .login-form .account-alr{
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+}
+.login-section .login-form .account-alr span{
+    margin-right: 4px;
+}
+.login-section .login-form .account-alr a{
+    color: black;
+}
+.login-section .login-form .account-alr a:hover{
+    text-decoration: none;
+}
+
+/* REGISTER */
+
+
+/*------------------------------------------------*/
