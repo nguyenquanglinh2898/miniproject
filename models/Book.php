@@ -26,6 +26,21 @@ class Book extends DAO{
         return $this->conn->query($sql);
     }
 
+    public function updateBook($b){
+        $sql = "UPDATE tbl_book 
+                SET name = '{$b->getName()}', 
+                    author = '{$b->getAuthor()}', 
+                    publisher = '{$b->getPublisher()}',
+                    cover =  '{$b->getCover()}', 
+                    unit_price = {$b->getUnit_price()}, 
+                    page = {$b->getPage()},
+                    width = '{$b->getWidth()}', 
+                    height = '{$b->getHeight()}', 
+                    release_date = '{$b->getRelease_date()}' 
+                WHERE id = {$b->getId()}";
+        return $this->conn->query($sql);
+    }
+
     public function getBook($id){
         $sql = "SELECT * FROM tbl_book WHERE id = {$id}";
         $books = $this->conn->query($sql);
@@ -66,19 +81,9 @@ class Book extends DAO{
         return null;
     }
 
-    public function updateBook($b){
-        $sql = "UPDATE tbl_book 
-                SET name = '{$b->getName()}', 
-                    author = '{$b->getAuthor()}', 
-                    publisher = '{$b->getPublisher()}',
-                    cover =  '{$b->getCover()}', 
-                    unit_price = {$b->getUnit_price()}, 
-                    page = {$b->getPage()},
-                    width = '{$b->getWidth()}', 
-                    height = '{$b->getHeight()}', 
-                    release_date = '{$b->getRelease_date()}' 
-                WHERE id = {$b->getId()}";
-        $this->conn->query($sql);
+    public function deleteBook($id){
+        $sql = "DELETE FROM tbl_book WHERE id = {$id}";
+        return $this->conn->query($sql);
     }
 
     public function getId(){

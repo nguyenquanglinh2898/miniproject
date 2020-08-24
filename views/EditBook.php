@@ -1,56 +1,107 @@
 <html lang="en">
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Edit book: </title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/4.0.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <title>Edit book: <?php echo $book->getName() ?></title>
 </head>
 <body>
-    <div class="container-fluid">
-        <form action="?controller=book&action=update&id=<?php echo $book->getId() ?>" method="POST">
+    <div class="container-fluid"><br>
+        <div class="alert-box">
+            <?php if(isset($success)): ?>
+                <?php if ($success): ?>
+                    <div class="alert alert-success  alert-dismissible">
+                        <strong>Lưu thành công</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                <?php elseif (!$success): ?>
+                    <div class="alert alert-danger  alert-dismissible">
+                        <strong>Không lưu được</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
+        <form action="?controller=book&action=edit&id=<?php echo $book->getId() ?>" method="POST" enctype="multipart/form-data" style="width: 50%">
             <div class="form-group">
-                <label for="name">ID</label>
-                <input type="text" name="id" class="form-control" value="<?php echo $book->getId() ?>" disabled>
+                <label for="name">Name *</label>
+                <input type="text" name="name" class="form-control" value="<?php echo $book->getName(); ?>">
+                <div class="text-danger"><?php echo (isset($error['name_err'])) ? $error['name_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" value="<?php echo $book->getName() ?>">
+                <label for="author">Author *</label>
+                <input type="text" name="author" class="form-control" value="<?php echo $book->getAuthor(); ?>">
+                <div class="text-danger"><?php echo (isset($error['author_err'])) ? $error['author_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="author">Author</label>
-                <input type="text" name="author" class="form-control" value="<?php echo $book->getAuthor() ?>">
+                <label for="publisher">Publisher *</label>
+                <input type="text" name="publisher" class="form-control" value="<?php echo $book->getPublisher(); ?>">
+                <div class="text-danger"><?php echo (isset($error['publisher_err'])) ? $error['publisher_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="publisher">Publisher</label>
-                <input type="text" name="publisher" class="form-control" value="<?php echo $book->getPublisher() ?>">
+                <label>Cover</label><br>
+                <input type="file" name="cover" id="cover" onchange="changeHandler(event)"><br>
+                <div class="text-danger"><?php echo (isset($error['cover_err'])) ? $error['cover_err']:"" ?></div>
+                <div class="image_area" style="width: 200px;">
+                    <img id="cover_img" src="">
+                </div>
             </div>
             <div class="form-group">
-                <label for="cover">Cover</label>
-                <input type="text" name="cover" class="form-control" value="<?php echo $book->getCover() ?>">
+                <label for="unit_price">Unit price *</label>
+                <input type="text" name="unit_price" class="form-control" placeholder="dong" value="<?php echo $book->getUnit_price(); ?>">
+                <div class="text-danger"><?php echo (isset($error['unit_price_err'])) ? $error['unit_price_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="unit_price">Unit price</label>
-                <input type="text" name="unit_price" class="form-control" value="<?php echo $book->getUnit_price() ?>">
+                <label for="page">Page *</label>
+                <input type="text" name="page" class="form-control" placeholder="page" value="<?php echo $book->getPage(); ?>">
+                <div class="text-danger"><?php echo (isset($error['page_err'])) ? $error['page_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="page">Page</label>
-                <input type="text" name="page" class="form-control" value="<?php echo $book->getPage() ?>">
+                <label for="size">Width *</label>
+                <input type="text" name="width" class="form-control" placeholder="width" value="<?php echo $book->getWidth(); ?>">
+                <div class="text-danger"><?php echo (isset($error['width_err'])) ? $error['width_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="size">Size</label>
-                <input type="text" name="size" class="form-control" value="<?php echo $book->getSize() ?>">
+                <label for="size">Height *</label>
+                <input type="text" name="height" class="form-control" placeholder="height" value="<?php echo $book->getHeight(); ?>">
+                <div class="text-danger"><?php echo (isset($error['height_err'])) ? $error['height_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="release_date">Release date</label>
-                <input type="text" name="release_date" class="form-control" value="<?php echo $book->getRelease_date() ?>">
+                <label for="release_date">Release date *</label>
+                <input type="text" id="release_date" name="release_date" class="form-control" placeholder="dd-mm-yyyy" autocomplete="off" value="<?php echo $book->getRelease_date(); ?>">
+                <div class="text-danger"><?php echo (isset($error['release_date_err'])) ? $error['release_date_err']:"" ?></div>
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Save</button>
+            <button type="submit" id="saveBtn" name="submitBtn" class="btn btn-primary">Save</button>
+            <a href="?controller=book&action=getAll" class="btn btn-secondary">Back</a>
         </form>
     </div>
 
+    <script>
+        $(function(){
+            $("#release_date").datepicker({ 
+                dateFormat: 'dd-mm-yy'
+            });
+        });
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        function changeHandler(evt) {
+            var files = evt.target.files;
+            var file = files[0];
+
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(file); 
+
+            fileReader.onload = function() {
+                var url = fileReader.result;
+                document.getElementById("cover_img").src = url;
+                document.getElementById('cover_img').style.width = '100%';
+            }
+        }
+    </script>
 </body>
 </html>
