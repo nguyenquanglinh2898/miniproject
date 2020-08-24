@@ -22,13 +22,13 @@ class Book extends DAO{
 
     public function addBook($b){
         $sql = "INSERT INTO tbl_book (name, author, publisher, cover, unit_price, page, width, height, release_date) 
-                VALUES ('{$b->getName()}', '{$b->getAuthor()}', '{$b->getPublisher()}', '{$b->getCover()}', {$b->getUnit_price()}, {$b->getPage()}, '{$b->getWidth()}', '{$b->getHeight()}', '{$b->getRelease_date()}')";
+                VALUES (\"{$b->getName()}\", '{$b->getAuthor()}', '{$b->getPublisher()}', '{$b->getCover()}', {$b->getUnit_price()}, {$b->getPage()}, '{$b->getWidth()}', '{$b->getHeight()}', '{$b->getRelease_date()}')";
         return $this->conn->query($sql);
     }
 
     public function updateBook($b){
         $sql = "UPDATE tbl_book 
-                SET name = '{$b->getName()}', 
+                SET name = \"{$b->getName()}\", 
                     author = '{$b->getAuthor()}', 
                     publisher = '{$b->getPublisher()}',
                     cover =  '{$b->getCover()}', 
@@ -64,20 +64,21 @@ class Book extends DAO{
     public function getBookByName($name){
         $sql = "SELECT * FROM tbl_book WHERE name = '{$name}'";
         $books = $this->conn->query($sql);
-        foreach( $books as $book ):
-            $b = new Book();
-            $b->setId($book['id']);
-            $b->setName($book['name']);
-            $b->setAuthor($book['author']);
-            $b->setPublisher($book['publisher']);
-            $b->setCover($book['cover']);
-            $b->setUnit_price($book['unit_price']);
-            $b->setPage($book['page']);
-            $b->setWidth($book['width']);
-            $b->setHeight($book['height']);
-            $b->setRelease_date($book['release_date']);
-            return $b;
-        endforeach;
+        if(isset($books) && !empty($books))
+            foreach( $books as $book ):
+                $b = new Book();
+                $b->setId($book['id']);
+                $b->setName($book['name']);
+                $b->setAuthor($book['author']);
+                $b->setPublisher($book['publisher']);
+                $b->setCover($book['cover']);
+                $b->setUnit_price($book['unit_price']);
+                $b->setPage($book['page']);
+                $b->setWidth($book['width']);
+                $b->setHeight($book['height']);
+                $b->setRelease_date($book['release_date']);
+                return $b;
+            endforeach;
         return null;
     }
 

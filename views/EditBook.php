@@ -54,22 +54,22 @@
             </div>
             <div class="form-group">
                 <label for="unit_price">Unit price *</label>
-                <input type="text" name="unit_price" class="form-control" placeholder="dong" value="<?php echo $book->getUnit_price(); ?>">
+                <input type="text" name="unit_price" class="form-control" value="<?php echo $book->getUnit_price(); ?>">
                 <div class="text-danger"><?php echo (isset($error['unit_price_err'])) ? $error['unit_price_err']:"" ?></div>
             </div>
             <div class="form-group">
                 <label for="page">Page *</label>
-                <input type="text" name="page" class="form-control" placeholder="page" value="<?php echo $book->getPage(); ?>">
+                <input type="text" name="page" class="form-control" value="<?php echo $book->getPage(); ?>">
                 <div class="text-danger"><?php echo (isset($error['page_err'])) ? $error['page_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="size">Width *</label>
-                <input type="text" name="width" class="form-control" placeholder="width" value="<?php echo $book->getWidth(); ?>">
+                <label for="size">Width(cm) *</label>
+                <input type="text" name="width" class="form-control" value="<?php echo $book->getWidth(); ?>">
                 <div class="text-danger"><?php echo (isset($error['width_err'])) ? $error['width_err']:"" ?></div>
             </div>
             <div class="form-group">
-                <label for="size">Height *</label>
-                <input type="text" name="height" class="form-control" placeholder="height" value="<?php echo $book->getHeight(); ?>">
+                <label for="size">Height(cm) *</label>
+                <input type="text" name="height" class="form-control" value="<?php echo $book->getHeight(); ?>">
                 <div class="text-danger"><?php echo (isset($error['height_err'])) ? $error['height_err']:"" ?></div>
             </div>
             <div class="form-group">

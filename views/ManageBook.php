@@ -28,12 +28,12 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
+            <th scope="col">STT</th>
             <th scope="col">Name</th>
             <th scope="col">Author</th>
             <th scope="col">Publisher</th>
             <th scope="col">Cover</th>
-            <th scope="col">Unit price</th>
+            <th scope="col">Unit price (dong)</th>
             <th scope="col">Page</th>
             <th scope="col">Size</th>
             <th scope="col">Realease date</th>
@@ -41,13 +41,15 @@
           </tr>
         </thead>
         <tbody>
-            <?php foreach($listBook as $book): ?>
+            <?php 
+              $stt = 1;
+              foreach($listBook as $book): ?>
               <tr>
-                <td><?php echo $book['id'] ?></td>
+                <td><?php echo $stt++ ?></td>
                 <td><?php echo $book['name'] ?></td>
                 <td><?php echo $book['author'] ?></td>
                 <td><?php echo $book['publisher'] ?></td>
-                <td><?php echo $book['cover'] ?></td>
+                <td><img src="<?php echo $book['cover'] ?>" width="200px" alt="Chưa có ảnh"></td>
                 <td><?php echo $book['unit_price'] ?></td>
                 <td><?php echo $book['page'] ?></td>
                 <td><?php echo $book['width']."x".$book['height']."cm" ?></td>

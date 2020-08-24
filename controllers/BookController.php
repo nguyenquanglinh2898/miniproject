@@ -14,6 +14,13 @@ class BookController{
         include_once('views/ManageBook.php');
     }
 
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     public function validate($form, $file){    
         //name
         $name_err = "";
@@ -25,14 +32,14 @@ class BookController{
         $author_err = "";
         $form['author'] = $this->normalize($form['author']);
         if($form['author'] == null || empty($form['author'])) $author_err = "Tên tác giả không được để trống";
-        elseif (strlen($form['author']) > 30) $author_err = "Tên tác giả không được vượt quá 30 kí tự";
+        elseif (strlen($form['author']) > 50) $author_err = "Tên tác giả không được vượt quá 50 kí tự";
         elseif (!$this->nameValidation($form['author'])) $author_err = "Tên tác giả không được chứa số và kí tự đặc biệt";
 
         //publisher
         $publisher_err = "";
         $form['publisher'] = $this->normalize($form['publisher']);
         if($form['publisher'] == null || empty($form['publisher'])) $publisher_err = "Tên nhà xuất bản không được để trống";
-        elseif (strlen($form['publisher']) > 70) $publisher_err = "Tên nhà xuất bản không được vượt quá 30 kí tự";
+        elseif (strlen($form['publisher']) > 70) $publisher_err = "Tên nhà xuất bản không được vượt quá 70 kí tự";
         elseif (!$this->nameValidation($form['publisher'])) $publisher_err = "Tên nhà xuất bản không được chứa số và kí tự đặc biệt";
 
         //cover
@@ -99,11 +106,14 @@ class BookController{
             'width_err' => $width_err,
             'height_err' => $height_err,
             'release_date_err' => $release_date_err,
-            'size' => $size
+            'size' => $size,
+            'form' => $form,
+            'file' => $file
         );
     }
 
     public function normalize($str){    // loại bỏ các dấu cách thừa
+        $str = $this->test_input($str); 
         $str = trim($str);
         $word = explode(" ", $str);
         $res = "";
@@ -145,25 +155,27 @@ class BookController{
         if(isset($_POST['submitBtn'])){
             $error = $this->validate($_POST, $_FILES);
 
-            $book->setName($_POST['name']); 
-            $book->setAuthor($_POST['author']);
-            $book->setPublisher($_POST['publisher']);
+            $book->setName($error['form']['name']); 
+            $book->setAuthor($error['form']['author']);
+            $book->setPublisher($error['form']['publisher']);
             if(isset($_FILES['cover']) && empty($error['cover_err'])){
                 $target = 'images/' . $_FILES["cover"]["name"];
                 if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
                 move_uploaded_file($_FILES['cover']['tmp_name'], $target);
                 if( $_FILES['cover']['name'] != null ) $book->setCover($target);
+                else $book->setCover(null);
             }
-            $book->setUnit_price($_POST['unit_price']);
-            $book->setPage($_POST['page']);
-            $book->setWidth(round((float)$_POST['width'], 1));
-            $book->setHeight(round((float)$_POST['height'], 1));
-            $book->setRelease_date($_POST['release_date']);
+            $book->setUnit_price($error['form']['unit_price']);
+            $book->setPage($error['form']['page']);
+            $book->setWidth($error['form']['width']);
+            $book->setHeight($error['form']['height']);
+            $book->setRelease_date($error['form']['release_date']);
             
-            if($this->model->getBookByName($_POST['name'])){
+            if(empty($error['name_err']) && $this->model->getBookByName($error['form']['name'])){
                 $error['name_err'] = "Tên sách đã tồn tại trong hệ thống";
-                $error['size']++;
+                $error['size']++; 
             }
+
             if($error['size'] == 0) $success = $this->model->addBook($book);
         }
         include('views/AddBook.php');
@@ -174,20 +186,21 @@ class BookController{
         if(isset($_POST['submitBtn'])){
             $error = $this->validate($_POST, $_FILES);
 
-            $book->setName($_POST['name']); 
-            $book->setAuthor($_POST['author']);
-            $book->setPublisher($_POST['publisher']);
+            $book->setName($error['form']['name']); 
+            $book->setAuthor($error['form']['author']);
+            $book->setPublisher($error['form']['publisher']);
             if(isset($_FILES['cover']) && empty($error['cover_err'])){
                 $target = 'images/' . $_FILES["cover"]["name"];
                 if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
                 move_uploaded_file($_FILES['cover']['tmp_name'], $target);
                 if( $_FILES['cover']['name'] != null ) $book->setCover($target);
+                else $book->setCover(null);
             }
-            $book->setUnit_price($_POST['unit_price']);
-            $book->setPage($_POST['page']);
-            $book->setWidth(round((float)$_POST['width'], 1));
-            $book->setHeight(round((float)$_POST['height'], 1));
-            $book->setRelease_date($_POST['release_date']);
+            $book->setUnit_price($error['form']['unit_price']);
+            $book->setPage($error['form']['page']);
+            $book->setWidth($error['form']['width']);
+            $book->setHeight($error['form']['height']);
+            $book->setRelease_date($error['form']['release_date']);
             
             if($error['size'] == 0) $success = $this->model->updateBook($book);
         }
