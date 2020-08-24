@@ -194,7 +194,7 @@ class BookController{
                 if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
                 move_uploaded_file($_FILES['cover']['tmp_name'], $target);
                 if( $_FILES['cover']['name'] != null ) $book->setCover($target);
-                else $book->setCover(null);
+                elseif (!$book->getCover()) $book->setCover(null);
             }
             $book->setUnit_price($error['form']['unit_price']);
             $book->setPage($error['form']['page']);

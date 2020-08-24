@@ -49,7 +49,7 @@
                 <input type="file" name="cover" id="cover" onchange="changeHandler(event)"><br>
                 <div class="text-danger"><?php echo (isset($error['cover_err'])) ? $error['cover_err']:"" ?></div>
                 <div class="image_area" style="width: 200px;">
-                    <img id="cover_img" src="">
+                    <img id="cover_img" src="<?php echo $book->getCoVer(); ?>" <?php echo ($book->getCover()) ? "width='100%'":"" ?>>
                 </div>
             </div>
             <div class="form-group">
