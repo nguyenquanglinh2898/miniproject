@@ -7,6 +7,23 @@
   </head>
   <body>
     <div class="container-fluid"><br>
+        <div class="alert-box">
+          <?php if(isset($_COOKIE['del'])): ?>
+              <?php if ($_COOKIE['del']): ?>
+                  <div class="alert alert-success  alert-dismissible">
+                      <strong>Xóa thành công</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                  </div>
+              <?php elseif (!$_COOKIE['del']): ?>
+                  <div class="alert alert-danger  alert-dismissible">
+                      <strong>Không xóa được</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                  </div>
+              <?php endif; ?>
+              <?php setcookie( "del", "", time()- 60, "/","", 0); ?>
+          <?php endif; ?>
+      </div>
+
       <a id="addBtn" class="btn btn-info" href="?controller=book&action=add">Add more book</a>
       <table class="table">
         <thead>
@@ -36,7 +53,7 @@
                 <td><?php echo $book['width']."x".$book['height']."cm" ?></td>
                 <td><?php echo $book['release_date'] ?></td>
                 <td><a id="editBtn" class="btn btn-primary" href="?controller=book&action=edit&id=<?php echo $book['id'] ?>">Edit</a></td>
-                <td><a id="deleteBtn" class="btn btn-danger" href="?controller=book&action=delete&id=<?php echo $book['id'] ?>">Delete</a></td>
+                <td><a id="deleteBtn" class="btn btn-danger" href="?controller=book&action=delete&id=<?php echo $book['id'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa <?php echo $book['name'] ?> không');">Delete</a></td>
               </tr>
             <?php endforeach ?>
         </tbody>

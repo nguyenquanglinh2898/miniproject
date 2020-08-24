@@ -28,7 +28,7 @@
             <?php endif; ?>
         </div>
 
-        <form action="?controller=book&action=add<?php echo $book->getId() ?>" method="POST" enctype="multipart/form-data" style="width: 50%">
+        <form action="?controller=book&action=add" method="POST" enctype="multipart/form-data" style="width: 50%">
             <div class="form-group">
                 <label for="name">Name *</label>
                 <input type="text" name="name" class="form-control" value="<?php echo $book->getName(); ?>">

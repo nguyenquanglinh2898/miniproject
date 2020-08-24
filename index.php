@@ -11,7 +11,7 @@ session_start();
   // if($_GET['controller'] == 'book' && $_GET['action'] == 'edit') $bookController->edit($_GET['id']);
 
   // if($_GET['controller'] == 'book' && $_GET['action'] == 'update') $bookController->update($_GET['id']);
-  if($_SESSION["LoginValidate"]){
+  if(true){
     if($_GET['controller'] == 'book'){
       require_once('controllers/BookController.php');
       $bookController = new BookController();
@@ -22,8 +22,8 @@ session_start();
         case 'edit':
           $bookController->edit($_GET['id']);
           break;
-        case 'update':
-          $bookController->update($_GET['id']);
+        case 'delete':
+          $bookController->delete($_GET['id']);
           break;
         default:
           $bookController->getAll();
