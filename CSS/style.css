@@ -66,10 +66,10 @@ body{
     z-index: 2;
     /* border: 1px solid brown; */
 }
-.header-menu .left-menu .menu-layer1:hover .menu-layer2{
-    /* visibility: visible;
-    opacity: 1; */
-}
+/* .header-menu .left-menu .menu-layer1:hover .menu-layer2{
+    visibility: visible;
+    opacity: 1;
+} */
 .header-menu .main-menu .left-menu .menu-layer1 .menu-layer2.show{
     visibility: visible;
     opacity: 1;

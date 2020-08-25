@@ -7,7 +7,7 @@ class User extends DAO {
     private $emailUser;
     private $passwordUser;
 
-    function userRegister($email) {
+    function userRegister($username, $email, $password) {
         $sql = "SELECT uidUser FROM users WHERE emailUser=?";
         $stmt = mysqli_stmt_init($this->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -21,19 +21,20 @@ class User extends DAO {
             if($check > 0) {
                 $error = "Email has been taken";
                 return $error;
-            }
+            } else {
+                $sql = "INSERT INTO users (uidUser, emailUser, passwordUser) VALUES (?, ?, ?)";
+                $stmt = mysqli_stmt_init($this->conn);
+                if(!mysqli_stmt_prepare($stmt, $sql)){
+                    $error = "Cant connect to database";
+                    return $error;
+                } else {
+                    $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+                    mysqli_bind_param($sql, "sss", $username, $email, $hashPassword);
+                    mysqli_stmt_execute($stmt);
+                    return true;
+                }
+            } 
         }
-        // $users = $this->conn->query($sql);
-        // if(!empty($users)) {
-        //     foreach( $users as $user ){
-        //         $user = new User();
-        //         $user->setUsername($user["uidUser"]);
-        //         $user->setEmail($user["emailUser"]);
-        //         $user->setPassword($user["passwordUser"]);
-        //     }
-        //     return $user;
-        // }
-        // return null;
     }
 
     function userLogin($email) {
