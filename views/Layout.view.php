@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./resources/font-awsome/all.min.css">
     <link rel="stylesheet" href="./CSS/style.css">
 
-    <title>Document</title>
+    <title>Mini-project</title>
 </head>
 <body>
     <div class="header-menu" id="nav-menu">
@@ -64,7 +64,7 @@
     </div>
 
     <?php
-        require_once "./views/pages/".$data["Login"].".view.php";
+        include_once "./views/pages/".$data["main"].".view.php";
     ?>
 <!-- 
 <form class="login-section">
