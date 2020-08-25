@@ -76,8 +76,6 @@ class UserController {
                 $_SESSION["emailUser"] = $user["emailUser"];
                 $_SESSION["username"] = $user["uidUser"];
 
-                // $_COOKIE["emailUser"] = $user["emailUser"];
-                // $_COOKIE["passwordUser"] = $user["passwordUser"];
                 if(isset($_POST["remember"])) {
                     setcookie("emailUser", $user["emailUser"], time() + 86400, "/");
                     setcookie("passwordUser", $user["passwordUser"], time() + 86400, "/");
@@ -88,56 +86,17 @@ class UserController {
                 exit();
             }
         }
-        // END sua code
-
-        // echo "Start controller";
-        // $email = $_POST["email"];
-        // $password = $_POST["password"];
-        // echo "Start controller";
-        // if(empty($email) || empty($password)){
-        //     echo "Start controller";
-        //     header("Location: /miniproject/?controller=user&action=viewLogin&error=empty-fields");
-        //     exit();
-        // } else {
-        //     echo "Start controller";
-        //     $user =  $this->model->userLogin($email);
-        //     // echo password_hash($user["passwordUser"], PASSWORD_DEFAULT);
-        //     // echo $user["passwordUser"];
-        //     $passwordCheck = password_verify($password, $user["passwordUser"]);
-        //     if($passwordCheck == false) {
-        //         header("Location: /miniproject/?controller=user&action=viewLogin&error=wrongPassword");
-        //         exit();
-        //     } else if ($passwordCheck == true) {
-        //         $_SESSION["emailUser"] = $user["emailUser"];
-        //         $_SESSION["username"] = $user["uidUser"];
-
-
-        //         header("Location: /miniproject/?controller=book&action=getAll");
-        //         exit();
-        //     }
-            // echo $user["emailUser"];
-            // echo "<pre>";
-            // print_r($user);
-            // echo"</pre>";
-
     }
 
     function postLogOut() {
-        // Xoa sessions
-        // Xoa cookies
-        // session_unset();
-        
+
         session_destroy();
 
         if(isset($_COOKIE["emailUser"]) && isset($_COOKIE["passwordUser"])){
             setcookie("emailUser", "", time() - 86400, "/");
             setcookie("passwordUser", "", time() - 86400, "/");
         }
-        // die(!isset($_COOKIE["emailUser"]) ? "SUCCESS" : "FAILED");
 
-        // echo isset($_SESSION["emailUser"]);
-        // echo $_SESSION["username"];
-        // die("SEE POST BEFORE HEADER");
         header("Location: /miniproject/?controller=user&action=viewLogin");
         exit();
     }
@@ -151,11 +110,10 @@ class UserController {
       }
 
     function postRegister() {
-        // Start coding
-        $username = $_POST["username"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $rePassword = $_POST["re-password"];
+        $username = $this->validateInput($_POST["username"]);
+        $email = $this->validateInput($_POST["email"]);
+        $password = $this->validateInput($_POST["password"]);
+        $rePassword = $this->validateInput($_POST["re-password"]);
 
         if(empty($username) || empty($email) || empty($password) || empty($rePassword)) {
             header("Location: /miniproject/?controller=user&action=viewRegister&error=empty-fields&username=".$username."&email=".$email);

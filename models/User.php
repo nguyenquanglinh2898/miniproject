@@ -7,18 +7,20 @@ class User extends DAO {
     private $emailUser;
     private $passwordUser;
 
-    function userRegister($username) {
-        $sql = "SELECT uidUser FROM users WHERE uidUser=?";
+    function userRegister($email) {
+        $sql = "SELECT uidUser FROM users WHERE emailUser=?";
         $stmt = mysqli_stmt_init($this->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
-            return false;
+            $error = "Cant connect to database";
+            return $error;
         } else {
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_bind_param($stmt, "s", $email);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
             $check = mysqli_stmt_num_rows($stmt);
             if($check > 0) {
-                return true;
+                $error = "Email has been taken";
+                return $error;
             }
         }
         // $users = $this->conn->query($sql);
@@ -35,7 +37,7 @@ class User extends DAO {
     }
 
     function userLogin($email) {
-        $sql = "SELECT * FROM users WHERE emailUser=?";
+        $sql = "SELECT * FROM users WHERE emailUser=? ";
         $stmt = mysqli_stmt_init($this->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)) {
             return false;

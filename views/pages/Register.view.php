@@ -1,8 +1,17 @@
 <form class="login-section" action="/miniproject/?controller=user&action=postRegister" method="POST">
     <div class="login-form">
         <p>ACCOUNT - SIGN UP</p>
-        <div class="text">User Name</div>
-        <input type="text" class="email" name="username">
+        <?php #if(true) { echo "<span class='requireText'>Name is require</span>"; }?>
+        <!-- <div class="text">User Name</div>
+        <input type="text" class="email" name="username"> -->
+        <div class="text first">User Name</div>
+        <input type="text" name="username" class="<?php
+            #echo "email ";
+            #if(isset($_GET["error"])) {
+
+            #    echo "require";
+            #}
+        ?>">
         <div class="text">Email Address</div>
         <input type="email" class="email" name="email">
         <div class="text">Password</div>

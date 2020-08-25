@@ -58,7 +58,7 @@
                 <a href="#" class="logo">k n o w l e d g e</a>
             </div>
             <div class="right-menu">
-                <div><a href="Login">My Account</a></div>
+                <div><a href="/miniproject/?controller=user&action=viewLogin">My Account</a></div>
             </div>
         </div>
     </div>
