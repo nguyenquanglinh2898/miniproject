@@ -55,6 +55,7 @@
                 <td><?php echo $book['page'] ?></td>
                 <td><?php echo $book['width']."x".$book['height']."cm" ?></td>
                 <td><?php echo $book['release_date'] ?></td>
+                <td><a id="detailBtn" class="btn btn-secondary" href="?controller=book&action=detail&id=<?php echo $book['id'] ?>">Detail</a></td>
                 <td><a id="editBtn" class="btn btn-primary" href="?controller=book&action=edit&id=<?php echo $book['id'] ?>">Edit</a></td>
                 <td><a id="deleteBtn" class="btn btn-danger" href="?controller=book&action=delete&id=<?php echo $book['id'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa <?php echo $book['name'] ?> không');">Delete</a></td>
               </tr>

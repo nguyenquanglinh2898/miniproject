@@ -5,9 +5,9 @@ class DAO{
     
     public function __construct(){
         $servername = "localhost";
-        $database = "miniproject";
-        $username = "quydang1";
-        $password = "1234";
+        $database = "book_management";
+        $username = "root";
+        $password = "@linh2898C";
         $this->conn = mysqli_connect($servername, $username, $password, $database);
     }
 }
