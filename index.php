@@ -23,6 +23,9 @@
         case 'add':
           $bookController->add();
           break;
+        case 'detail':
+            $bookController->detail($_GET['id']);
+            break;  
         case 'edit':
           $bookController->edit($_GET['id']);
           break;
