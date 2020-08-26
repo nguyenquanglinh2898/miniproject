@@ -15,6 +15,77 @@ class BookController{
         include_once('views/ManageBook.php');
     }
 
+    public function add(){
+        $book = new Book();
+        if(isset($_POST['submitBtn'])){
+            $error = $this->validate($_POST, $_FILES);
+
+            $book->setName($error['form']['name']); 
+            $book->setAuthor($error['form']['author']);
+            $book->setPublisher($error['form']['publisher']);
+            if(isset($_FILES['cover']) && empty($error['cover_err'])){
+                $target = 'images/' . $_FILES["cover"]["name"];
+                if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
+                move_uploaded_file($_FILES['cover']['tmp_name'], $target);
+                if( $_FILES['cover']['name'] != null ) $book->setCover($target);
+                else $book->setCover(null);
+            }
+            $book->setUnit_price($error['form']['unit_price']);
+            $book->setPage($error['form']['page']);
+            $book->setWidth($error['form']['width']);
+            $book->setHeight($error['form']['height']);
+            $book->setRelease_date($error['form']['release_date']);
+            
+            if(empty($error['name_err']) && $this->model->getBookByName($error['form']['name'])){
+                $error['name_err'] = "Tên sách đã tồn tại trong hệ thống";
+                $error['size']++; 
+            }
+
+            if($error['size'] == 0) $success = $this->model->addBook($book);
+        }
+        include('views/AddBook.php');
+    }
+
+    public function detail($id){
+        $book = $this->model->getBook($id);
+        include_once('views/DetailBook.php');
+    }
+
+    public function edit($id){
+        $book = $this->model->getBook($id);
+        if(isset($_POST['submitBtn'])){
+            $error = $this->validate($_POST, $_FILES);
+
+            $book->setName($error['form']['name']); 
+            $book->setAuthor($error['form']['author']);
+            $book->setPublisher($error['form']['publisher']);
+            if(isset($_FILES['cover']) && empty($error['cover_err'])){
+                $target = 'images/' . $_FILES["cover"]["name"];
+                if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
+                move_uploaded_file($_FILES['cover']['tmp_name'], $target);
+                if( $_FILES['cover']['name'] != null ) $book->setCover($target);
+                elseif (!$book->getCover()) $book->setCover(null);
+            }
+            $book->setUnit_price($error['form']['unit_price']);
+            $book->setPage($error['form']['page']);
+            $book->setWidth($error['form']['width']);
+            $book->setHeight($error['form']['height']);
+            $book->setRelease_date($error['form']['release_date']);
+            
+            if($error['size'] == 0) $success = $this->model->updateBook($book);
+        }
+        include_once('views/EditBook.php');
+    }
+
+    public function delete($id){
+        $success = $this->model->deleteBook($id);
+        
+        if($success) setcookie("del", 1, time() + 600, "/");
+        else setcookie("del", 0, time() + 600, "/");
+        
+        header('Location: ?controller=book&action=getAll');
+    }
+
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -149,71 +220,5 @@ class BookController{
             return true;
         }
         return false;
-    }
-
-    public function add(){
-        $book = new Book();
-        if(isset($_POST['submitBtn'])){
-            $error = $this->validate($_POST, $_FILES);
-
-            $book->setName($error['form']['name']); 
-            $book->setAuthor($error['form']['author']);
-            $book->setPublisher($error['form']['publisher']);
-            if(isset($_FILES['cover']) && empty($error['cover_err'])){
-                $target = 'images/' . $_FILES["cover"]["name"];
-                if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
-                move_uploaded_file($_FILES['cover']['tmp_name'], $target);
-                if( $_FILES['cover']['name'] != null ) $book->setCover($target);
-                else $book->setCover(null);
-            }
-            $book->setUnit_price($error['form']['unit_price']);
-            $book->setPage($error['form']['page']);
-            $book->setWidth($error['form']['width']);
-            $book->setHeight($error['form']['height']);
-            $book->setRelease_date($error['form']['release_date']);
-            
-            if(empty($error['name_err']) && $this->model->getBookByName($error['form']['name'])){
-                $error['name_err'] = "Tên sách đã tồn tại trong hệ thống";
-                $error['size']++; 
-            }
-
-            if($error['size'] == 0) $success = $this->model->addBook($book);
-        }
-        include('views/AddBook.php');
-    }
-
-    public function edit($id){
-        $book = $this->model->getBook($id);
-        if(isset($_POST['submitBtn'])){
-            $error = $this->validate($_POST, $_FILES);
-
-            $book->setName($error['form']['name']); 
-            $book->setAuthor($error['form']['author']);
-            $book->setPublisher($error['form']['publisher']);
-            if(isset($_FILES['cover']) && empty($error['cover_err'])){
-                $target = 'images/' . $_FILES["cover"]["name"];
-                if(file_exists($target)) $target = 'images/'.time().$_FILES["cover"]["name"];
-                move_uploaded_file($_FILES['cover']['tmp_name'], $target);
-                if( $_FILES['cover']['name'] != null ) $book->setCover($target);
-                elseif (!$book->getCover()) $book->setCover(null);
-            }
-            $book->setUnit_price($error['form']['unit_price']);
-            $book->setPage($error['form']['page']);
-            $book->setWidth($error['form']['width']);
-            $book->setHeight($error['form']['height']);
-            $book->setRelease_date($error['form']['release_date']);
-            
-            if($error['size'] == 0) $success = $this->model->updateBook($book);
-        }
-        include('views/EditBook.php');
-    }
-
-    public function delete($id){
-        $success = $this->model->deleteBook($id);
-        
-        if($success) setcookie("del", 1, time() + 600, "/");
-        else setcookie("del", 0, time() + 600, "/");
-        
-        header('Location: ?controller=book&action=getAll');
     }
 }
