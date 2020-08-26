@@ -12,6 +12,21 @@
 </head>
 <body>
     <div class="container-fluid"><br>
+        <div class="alert-box">
+            <?php if(isset($success)): ?>
+                <?php if ($success): ?>
+                    <div class="alert alert-success  alert-dismissible">
+                        <strong>Lưu thành công</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                <?php elseif (!$success): ?>
+                    <div class="alert alert-danger  alert-dismissible">
+                        <strong>Không lưu được</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
         <div style="width: 50%">
             <div><b>Id: </b><?php echo $book->getId(); ?></div>
             <div><b>Name: </b><?php echo $book->getName(); ?></div>

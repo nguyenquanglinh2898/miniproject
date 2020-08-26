@@ -15,7 +15,7 @@ class Book extends DAO{
     private $release_date;
 
     public function getAllBook(){
-        $sql = "SELECT * FROM tbl_book";
+        $sql = "SELECT * FROM tbl_book ORDER BY id DESC";
         $listBook = $this->conn->query($sql);
         return $listBook;
     }

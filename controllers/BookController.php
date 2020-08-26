@@ -41,7 +41,11 @@ class BookController{
                 $error['size']++; 
             }
 
-            if($error['size'] == 0) $success = $this->model->addBook($book);
+            if($error['size'] == 0){
+                $success = $this->model->addBook($book);
+                include_once('views/DetailBook.php');
+                return;
+            }
         }
         include('views/AddBook.php');
     }
@@ -72,7 +76,11 @@ class BookController{
             $book->setHeight($error['form']['height']);
             $book->setRelease_date($error['form']['release_date']);
             
-            if($error['size'] == 0) $success = $this->model->updateBook($book);
+            if($error['size'] == 0){
+                $success = $this->model->updateBook($book);
+                include_once('views/DetailBook.php');
+                return;
+            }
         }
         include_once('views/EditBook.php');
     }
