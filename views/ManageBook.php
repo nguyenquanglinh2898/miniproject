@@ -25,6 +25,7 @@
       </div>
 
       <a id="addBtn" class="btn btn-info" href="?controller=book&action=add">Add more book</a>
+      <a id="addBtn" class="btn btn-danger" href="?controller=user&action=postLogOut">Log Out</a>
       <table class="table">
         <thead>
           <tr>
