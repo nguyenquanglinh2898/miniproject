@@ -29,7 +29,7 @@ class User extends DAO {
                     return $error;
                 } else {
                     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-                    mysqli_bind_param($sql, "sss", $username, $email, $hashPassword);
+                    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashPassword);
                     mysqli_stmt_execute($stmt);
                     return true;
                 }
@@ -49,7 +49,7 @@ class User extends DAO {
             if($row = mysqli_fetch_assoc($result)) {
                 return $row;
             } else {
-                return false;
+                return "";
             }
         }
     }

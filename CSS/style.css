@@ -260,3 +260,14 @@ body{
 .require {
     border-bottom: 1px solid rgb(255, 0, 0) !important;
 }
+
+.requireText {
+    color: #9F686B;
+    border: 2px solid #f5c9cc;
+    border-radius: 7px;
+    box-sizing: border-box;
+    background-color: #F3D8DA;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 15px;
+}

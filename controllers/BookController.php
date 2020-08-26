@@ -176,7 +176,6 @@ class BookController{
                 $error['name_err'] = "Tên sách đã tồn tại trong hệ thống";
                 $error['size']++; 
             }
-
             if($error['size'] == 0) $success = $this->model->addBook($book);
         }
         include('views/AddBook.php');
